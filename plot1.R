@@ -51,7 +51,7 @@ getData <- function() {
   }
   
   ## filering out rows that contain "?" OR missing values
-  data <- data[apply(z, 1, filter),]
+  data <- data[apply(data, 1, filter),]
   
   ## converting format of date from character to date format
   data$Date <- as.Date(data$Date, "%d/%m/%Y")
@@ -75,20 +75,22 @@ plot1 <- function() {
   ## getting data
   data <- getData()
   
+  ## deleting plot file if it already existed
+  plotFileName <- "./data/plot1.png"
+  if(file.exists(plotFileName)) {
+    message("deleting previos plot")
+    file.remove(plotFileName)
+  }
+  
+  ## opening png device and setting name of file where plot would be saved
+  png(file = plotFileName, width = 480, height = 480)
+  
   ## setting environment for plot
   par(mfrow = c(1,1), mar = c(4,4,2,1), oma = c(0,0,2,0))
   
   ## plotting histogram
   hist(data$Global_active_power, xlab = "Global Active Power (kilowatts)",
        col = "red", main = "Global Active Power")
-  
-  plotFileName <- "./data/plot1.png"
-  if(file.exists(plotFileName)) {
-    message("deleting previos plot")
-    file.remove(plotFileName)
-  }
-  ## saving plot to file in png format
-  dev.copy(png, file = plotFileName, width = 480, height = 480)
   
   ## closing png device
   dev.off()

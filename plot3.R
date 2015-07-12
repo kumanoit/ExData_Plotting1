@@ -51,7 +51,7 @@ getData <- function() {
   }
   
   ## filering out rows that contain "?" OR missing values
-  data <- data[apply(z, 1, filter),]
+  data <- data[apply(data, 1, filter),]
   
   ## converting format of date from character to date format
   data$Date <- as.Date(data$Date, "%d/%m/%Y")
